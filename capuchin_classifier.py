@@ -61,10 +61,6 @@ print("\n Scanning forest clips with sliding windows...\n")
 chunk_duration = 2.0  # seconds
 step_duration = 1.0   # Jeg overlapper med 1 sek
 
-print("Files in forest_dir:")
-for fname in os.listdir(forest_dir):
-    print(fname)
-
 
 for fname in os.listdir(forest_dir):
     if fname.endswith(".wav"):

@@ -61,6 +61,11 @@ print("\n Scanning forest clips with sliding windows...\n")
 chunk_duration = 2.0  # seconds
 step_duration = 1.0   # Jeg overlapper med 1 sek
 
+print("Files in forest_dir:")
+for fname in os.listdir(forest_dir):
+    print(fname)
+
+
 for fname in os.listdir(forest_dir):
     if fname.endswith(".wav"):
         file_path = os.path.join(forest_dir, fname)
@@ -85,8 +90,8 @@ for fname in os.listdir(forest_dir):
             if prediction == 1:
                 timestamp_start = start / sr
                 timestamp_end = end / sr
-                print(f"✅ Capuchin detected in {fname} between {timestamp_start:.2f}s – {timestamp_end:.2f}s")
+                print(f"Capuchin detected in {fname} between {timestamp_start:.2f}s – {timestamp_end:.2f}s")
                 found_capuchin = True
 
         if not found_capuchin:
-            print(f"🔍 No Capuchin found in {fname}")
+            print(f"No Capuchin found in {fname}")

@@ -16,11 +16,9 @@ def extract_mfcc(y, sr, n_mfcc=13):
     mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=n_mfcc)
     return np.mean(mfcc.T, axis=0)
 
-print("Listening for Capuchin sounds... (Press Ctrl+C to stop)")
+print("Listening for Capuchin sounds... (Ctrl+C for at stoppe)")
 
 import sounddevice as sd
-print(sd.query_devices())
-
 
 try:
     while True:
@@ -36,6 +34,7 @@ try:
         sd.wait()
 
         y = recording.flatten()
+        y = librosa.util.normalize(y)  # Normalisér volumen
         features = extract_mfcc(y, sample_rate)
 
         prediction = model.predict([features])[0]

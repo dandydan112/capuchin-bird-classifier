@@ -5,7 +5,7 @@ import datetime
 # Settings
 duration = 3  # seconds
 sample_rate = 22050
-device_index = 1  # use your Q9-1 mic
+device_index = 1  # brug mic 1
 
 # Record
 print("Recording for 3 seconds...")

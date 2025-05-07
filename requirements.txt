@@ -1,0 +1,4 @@
+Naviger mod jeres repo I cmd: C:\Users\dantn\Documents\GitHub\capuchin-bird-classifier
+
+skriv:
+pip install librosa numpy pandas scikit-learn sounddevice joblib pydub

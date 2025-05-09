@@ -2,9 +2,7 @@ import os
 import subprocess
 
 folder = r"data\Forest Recordings"
-
-# Path to ffmpeg executable
-ffmpeg_path = r"C:\Users\dantn\Downloads\ffmpeg-7.1.1-essentials_build\ffmpeg-7.1.1-essentials_build\bin\ffmpeg.exe"
+ffmpeg_path = r"C:\Users\Dan\Downloads\ffmpeg-7.1.1-essentials_build\ffmpeg-7.1.1-essentials_build\bin\ffmpeg.exe"
 
 for fname in os.listdir(folder):
     if fname.lower().endswith(".mp3"):
@@ -20,10 +18,11 @@ for fname in os.listdir(folder):
             wav_path
         ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
+        # If conversion was successful, delete the original .mp3
         if result.returncode == 0:
             os.remove(mp3_path)
-            print(f"Deleted: {fname}")
+            print(f"Deleted original: {fname}")
         else:
-            print(f"Conversion failed for: {fname}")
+            print(f"❌ Failed to convert: {fname}")
 
-print("All .mp3 files converted and deleted.")
+print("All .mp3 files converted and originals deleted.")

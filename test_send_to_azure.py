@@ -1,11 +1,15 @@
 import requests
 from datetime import datetime
+from zoneinfo import ZoneInfo 
+
+# dk tid
+dk_time = datetime.now(ZoneInfo("Europe/Copenhagen")).isoformat()
 
 url = ""
 
 data = {
     "detected": True,
-    "timestamp": datetime.utcnow().isoformat() + "Z",
+    "timestamp": dk_time,
     "confidence": 0.97,
     "model_version": "v1.0.0",
     "recordingURL": "harikkeurltilmp3endnu.dk",

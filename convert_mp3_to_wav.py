@@ -23,6 +23,5 @@ for fname in os.listdir(folder):
             os.remove(mp3_path)
             print(f"Deleted original: {fname}")
         else:
-            print(f"❌ Failed to convert: {fname}")
+            print(f"Failed to convert: {fname}")
 
-print("All .mp3 files converted and originals deleted.")

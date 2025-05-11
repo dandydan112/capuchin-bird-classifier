@@ -10,7 +10,7 @@ from zoneinfo import ZoneInfo
 model = joblib.load("capuchin_model.pkl")
 
 azure_url = ""
-CONFIDENCE_THRESHOLD = 0.90
+CONFIDENCE_THRESHOLD = 0.65
 
 duration = 2
 sample_rate = 22050

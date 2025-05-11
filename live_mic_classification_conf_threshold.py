@@ -7,16 +7,14 @@ import time
 from datetime import datetime
 from zoneinfo import ZoneInfo 
 
-# Load trained model
 model = joblib.load("capuchin_model.pkl")
 
-# Maliks endpoint
 azure_url = ""
+CONFIDENCE_THRESHOLD = 0.90
 
-# Audio settings
-duration = 2  # seconds
+duration = 2
 sample_rate = 22050
-device_index = 1  #mic 1
+device_index = 1
 
 def extract_mfcc(y, sr, n_mfcc=13):
     mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=n_mfcc)
@@ -40,11 +38,9 @@ try:
         y = librosa.util.normalize(y)
         features = extract_mfcc(y, sample_rate)
 
-        # Predict
-        prediction = model.predict([features])[0]
-        confidence = model.predict_proba([features])[0][1]  # konfidens
+        confidence = model.predict_proba([features])[0][1]
 
-        if prediction == 1:
+        if confidence >= CONFIDENCE_THRESHOLD:
             timestamp = datetime.now(ZoneInfo("Europe/Copenhagen")).isoformat()
             print(f"Capuchin detected! Confidence: {confidence:.2f}")
 
@@ -67,7 +63,7 @@ try:
             # except requests.RequestException as e:
             #     print("Failed to notify Azure:", e)
         else:
-            print("No Capuchin detected.")
+            print(f"No Capuchin detected. Confidence: {confidence:.2f}")
 
         time.sleep(0.5)
 

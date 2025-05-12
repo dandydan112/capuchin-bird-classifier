@@ -9,8 +9,13 @@ from zoneinfo import ZoneInfo
 
 model = joblib.load("capuchin_model.pkl")
 
-azure_url = ""
+azure_url = "https://dronedetection-apim.azure-api.net/dronealarm-m/SaveDroneAlarm"
 CONFIDENCE_THRESHOLD = 0.65
+
+headers = {
+    "Content-Type": "application/json",
+    "Ocp-Apim-Subscription-Key": "ff53d9578575498897e99d7e536e6464"
+}
 
 duration = 2
 sample_rate = 22050
@@ -41,12 +46,12 @@ try:
         confidence = model.predict_proba([features])[0][1]
 
         if confidence >= CONFIDENCE_THRESHOLD:
-            timestamp = datetime.now(ZoneInfo("Europe/Copenhagen")).isoformat()
             print(f"Capuchin detected! Confidence: {confidence:.2f}")
 
+            
             data = {
                 "detected": True,
-                "timestamp": timestamp,
+                "timestamp": datetime.utcnow().isoformat() + "Z",
                 "confidence": float(confidence),
                 "model_version": "v1.0.0",
                 "recordingURL": "",
@@ -56,12 +61,12 @@ try:
                 }
             }
 
-            # try:
-            #     response = requests.post(azure_url, json=data, timeout=5)
-            #     response.raise_for_status()
-            #     print("Notification sent to Azure:", response.status_code)
-            # except requests.RequestException as e:
-            #     print("Failed to notify Azure:", e)
+            try:
+                response = requests.post(azure_url, json=data, headers=headers, timeout=5)
+                response.raise_for_status()
+                print("Notification sent to Azure:", response.status_code)
+            except requests.RequestException as e:
+                print("Failed to notify Azure:", e)
         else:
             print(f"No Capuchin detected. Confidence: {confidence:.2f}")
 

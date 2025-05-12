@@ -9,8 +9,8 @@ from zoneinfo import ZoneInfo
 
 model = joblib.load("capuchin_model.pkl")
 
-azure_url = "https://dronedetection-apim.azure-api.net/dronealarm-m/SaveDroneAlarm"
-CONFIDENCE_THRESHOLD = 0.65
+azure_url = ""
+CONFIDENCE_THRESHOLD = 0.10
 
 headers = {
     "Content-Type": "application/json",

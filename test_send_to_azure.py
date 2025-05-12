@@ -1,7 +1,7 @@
 import requests
 from datetime import datetime
 
-url = "https://dronedetection-apim.azure-api.net/dronealarm-m/SaveDroneAlarm"
+url = ""
 
 headers = {
     "Content-Type": "application/json",

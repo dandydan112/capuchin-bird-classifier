@@ -4,13 +4,21 @@ import librosa
 import joblib
 import requests
 import time
-from datetime import datetime
+import json
+from datetime import datetime, timezone
 from zoneinfo import ZoneInfo 
+
+timestamp = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
 model = joblib.load("capuchin_model.pkl")
 
-azure_url = ""
-CONFIDENCE_THRESHOLD = 0.10
+# Læs konfigurationsfilen
+with open('config.json') as config_file:
+    config = json.load(config_file)
+
+azure_url = config["azure_url"]
+
+CONFIDENCE_THRESHOLD = 0.65
 
 headers = {
     "Content-Type": "application/json",
@@ -51,14 +59,14 @@ try:
             
             data = {
                 "detected": True,
-                "timestamp": datetime.utcnow().isoformat() + "Z",
+                "timestamp": timestamp,
                 "confidence": float(confidence),
                 "model_version": "v1.0.0",
-                "recordingURL": "",
+                "recordingURL": "Ingen URL",
                 "location": {
-                    "lat": 55.6761,
-                    "lon": 12.5683
-                }
+                    "lat": 55.4245,
+                    "lon": 10.4495
+                    }
             }
 
             try:

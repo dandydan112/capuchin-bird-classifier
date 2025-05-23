@@ -42,3 +42,5 @@ for fname in os.listdir(forest_dir):
 
         if not found:
             print(f"{fname}: No Capuchin detected.")
+
+            

@@ -1,7 +1,15 @@
 import requests
-from datetime import datetime
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo 
+import json
 
-url = ""
+timestamp = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+
+# Læs konfigurationsfilen
+with open('config.json') as config_file:
+    config = json.load(config_file)
+
+azure_url = config["azure_url"]
 
 headers = {
     "Content-Type": "application/json",
@@ -10,18 +18,19 @@ headers = {
 
 data = {
     "detected": True,
-    "timestamp": datetime.utcnow().isoformat() + "Z",
-    "confidence": 0.97,
+    "timestamp": timestamp,
+    "confidence": 0.79,
     "model_version": "v1.0.0",
-    "recordingURL": "harikkeurltilmp3endnu.dk",
+    "recordingURL": "Ingen URL",
     "location": {
-        "lat": 55.6761,
-        "lon": 12.5683
+        "lat": 55.4662,
+        "lon": 9.7624
     }
 }
 
+
 try:
-    response = requests.post(url, json=data, headers=headers, timeout=15)
+    response = requests.post(azure_url, json=data, headers=headers, timeout=15)
     response.raise_for_status()
     print("Test request sent successfully:", response.status_code)
     print("Response content:", response.text)
